@@ -1,11 +1,13 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.Threading.Tasks;
 using Azureoth.RestfulDb.Database;
+using Azureoth.RestfulDb.Routing;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
-namespace Azureoth.RestfulDb.Routing
+namespace Azureoth.RestfulDb
 {
     internal class RestfulDbMiddleware
     {
@@ -26,14 +28,25 @@ namespace Azureoth.RestfulDb.Routing
             {
                 var data = this.routeResolver.Resolve(context.Request);
 
-                var response = this.dbHandler.Execute(data);
-
-                context.Response.StatusCode = 200;
-
-                if (response != null)
+                try
                 {
-                    context.Response.ContentType = "application/json";
-                    await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
+                    var response = this.dbHandler.Execute(data);
+
+                    context.Response.StatusCode = 200;
+
+                    if (response != null)
+                    {
+                        context.Response.ContentType = "application/json";
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
+                    }
+                }
+                catch(TableNotFoundException)
+                {
+                    context.Response.StatusCode = 404;
+                }
+                catch
+                {
+                    context.Response.StatusCode = 500;
                 }
             }
             else

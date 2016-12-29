@@ -34,9 +34,32 @@ namespace Azureoth.RestfulDb.Database
             using (var connection = new SqlConnection(this.connectionString))
             {
                 connection.Open();
+
+                EnsureTableExists(connection, data.AppId, data.Table);
+
+                if (data.NavigationTable != null)
+                {
+                    EnsureTableExists(connection, data.AppId, data.NavigationTable);
+                }
+
                 var response = command.Execute(connection, data);
                 connection.Close();
                 return response;
+            }
+        }
+
+        private void EnsureTableExists(SqlConnection connection, string appId, string table)
+        {
+            var query = $"SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{appId}' AND TABLE_NAME = '{table}';";
+            using (var command = new SqlCommand(query, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                   if (!reader.Read())
+                    {
+                        throw new TableNotFoundException("The specified table was not found");
+                    }
+                }
             }
         }
     }
