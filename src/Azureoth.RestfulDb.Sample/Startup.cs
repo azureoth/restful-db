@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Azureoth.Router.Sample
+namespace Azureoth.RestfulDb.Sample
 {
     public class Startup
     {
@@ -34,7 +34,7 @@ namespace Azureoth.Router.Sample
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ISqlManager, SqlManager>();
+            services.AddTransient<IDatabaseService, SqlDatabaseService>();
 
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);

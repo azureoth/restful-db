@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB818298-8319-4B61-B928-00A1B6DFDD6B}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{73A57CC5-DA9D-4103-94F5-E4A01C13BB3F}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Azureoth.RestfulDb", "Azureoth.RestfulDb\Azureoth.RestfulDb.xproj", "{859C41A7-015C-48EB-8973-547407781DA2}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Azureoth.RestfulDb.Sample", "Azureoth.RestfulDb.Sample\Azureoth.RestfulDb.Sample.xproj", "{DE562E7D-B14D-43EF-B0C6-3B67DF2D5BF1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{859C41A7-015C-48EB-8973-547407781DA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{859C41A7-015C-48EB-8973-547407781DA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{859C41A7-015C-48EB-8973-547407781DA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{859C41A7-015C-48EB-8973-547407781DA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE562E7D-B14D-43EF-B0C6-3B67DF2D5BF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE562E7D-B14D-43EF-B0C6-3B67DF2D5BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE562E7D-B14D-43EF-B0C6-3B67DF2D5BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE562E7D-B14D-43EF-B0C6-3B67DF2D5BF1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{859C41A7-015C-48EB-8973-547407781DA2} = {73A57CC5-DA9D-4103-94F5-E4A01C13BB3F}
+		{DE562E7D-B14D-43EF-B0C6-3B67DF2D5BF1} = {73A57CC5-DA9D-4103-94F5-E4A01C13BB3F}
+	EndGlobalSection
+EndGlobal

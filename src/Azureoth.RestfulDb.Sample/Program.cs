@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 
-namespace Azureoth.Router.Sample
+namespace Azureoth.RestfulDb.Sample
 {
     public class Program
     {

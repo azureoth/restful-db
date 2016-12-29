@@ -4,14 +4,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Azureoth.Router
+namespace Azureoth.RestfulDb
 {
-    public sealed class SqlManager : ISqlManager
+    public sealed class SqlDatabaseService : IDatabaseService
     {
         private readonly static string ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Azureoth;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         private readonly static Regex NameValidator = new Regex("^[a-zA-Z0-9_]*$", RegexOptions.Compiled);
 
-        public object Get(string appId, string table, int id)
+        public object Get<T>(string appId, string table, T id)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -76,7 +76,7 @@ namespace Azureoth.Router
             }
         }
 
-        public decimal Insert(string appId, string table, IDictionary<string, object> data)
+        public T Insert<T>(string appId, string table, IDictionary<string, object> data)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -92,14 +92,14 @@ namespace Azureoth.Router
                 }
 
                 connection.Open();
-                var id = (decimal)command.ExecuteScalar();
+                var id = (T)command.ExecuteScalar();
                 connection.Close();
 
                 return id;
             }
         }
 
-        public void Update(string appId, string table, int id, IDictionary<string, object> data)
+        public void Update<T>(string appId, string table, T id, IDictionary<string, object> data)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -107,12 +107,11 @@ namespace Azureoth.Router
                 var query = $"UPDATE [{appId}].[{table}] SET {parameters}  WHERE [Id] = @ID;";
 
                 var command = new SqlCommand(query, connection);
-                command.Parameters.Add("@ID", SqlDbType.Int);
-                command.Parameters["@ID"].Value = id;
+                command.Parameters.AddWithValue("@ID", id);
 
                 foreach (var item in data)
                 {
-                    command.Parameters.AddWithValue("@" + item.Key, item.Value);
+                    command.Parameters.AddWithValue($"@{item.Key}", item.Value);
                 }
 
                 connection.Open();
@@ -121,15 +120,14 @@ namespace Azureoth.Router
             }
         }
 
-        public void Delete(string appId, string table, int id)
+        public void Delete<T>(string appId, string table, T id)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
                 var query = $"DELETE FROM [{appId}].[{table}] WHERE [Id] = @ID";
 
                 var command = new SqlCommand(query, connection);
-                command.Parameters.Add("@ID", SqlDbType.Int);
-                command.Parameters["@ID"].Value = id;
+                command.Parameters.AddWithValue("@ID", id);
 
                 connection.Open();
                 command.ExecuteNonQuery();
