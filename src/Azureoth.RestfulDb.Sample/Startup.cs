@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Azureoth.RestfulDb.Routing;
 
 namespace Azureoth.RestfulDb.Sample
 {
@@ -34,10 +35,9 @@ namespace Azureoth.RestfulDb.Sample
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IDatabaseService, SqlDatabaseService>();
-
-            // Add framework services.
-            services.AddApplicationInsightsTelemetry(Configuration);
+            services.ConfigureRestfulDb(
+                connectionString: @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Azureoth;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False",
+                apiPrefix: "/api/apps");
 
             services.AddMvc();
         }
@@ -48,9 +48,7 @@ namespace Azureoth.RestfulDb.Sample
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseApplicationInsightsRequestTelemetry();
-
-            app.UseApplicationInsightsExceptionTelemetry();
+            app.UseRestfulDb();
 
             app.UseMvc();
         }
