@@ -42,6 +42,11 @@ namespace Azureoth.RestfulDb.Routing
                 data.Key = parts[2]; 
             }
 
+            if (parts.Length > 3)
+            {
+                data.NavigationTable = parts[3];
+            }
+
             data.Method = request.Method;
 
             if (request.Body != null && (StringComparer.OrdinalIgnoreCase.Equals(request.Method, "POST") || StringComparer.OrdinalIgnoreCase.Equals(request.Method, "PUT")))

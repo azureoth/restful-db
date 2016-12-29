@@ -13,6 +13,8 @@ namespace Azureoth.RestfulDb.Routing
 
         public object Key { get; set; }
 
+        public string NavigationTable { get; set; }
+
         public IDictionary<string, object> Data { get; set; }
     }
 }

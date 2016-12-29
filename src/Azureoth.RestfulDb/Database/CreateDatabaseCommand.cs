@@ -11,7 +11,7 @@ namespace Azureoth.RestfulDb.Database
         {
             var table = this.GetTableName(data);
 
-            var keys = string.Join(",", data.Data.Select(i => i.Key));
+            var keys = string.Join(",", data.Data.Select(i => $"\"{i.Key}\""));
             var parameters = string.Join(",", data.Data.Select(i => "@" + i.Key));
             var query = $"INSERT INTO {table} ({keys}) VALUES ({parameters}); SELECT SCOPE_IDENTITY();";
 
