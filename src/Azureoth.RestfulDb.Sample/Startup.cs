@@ -31,7 +31,7 @@ namespace Azureoth.RestfulDb.Sample
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureRestfulDb(
-                connectionString: @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Azureoth;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False",
+                connectionString: Configuration.GetConnectionString("Database"),
                 apiPrefix: "/api/apps");
 
             services.AddMvc();
@@ -42,6 +42,13 @@ namespace Azureoth.RestfulDb.Sample
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseCors(builder =>
+                builder
+                    .WithOrigins("http://localhost:8100", "http://localhost:3000", "https://diwanschool.com")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
 
             app.UseRestfulDb();
 

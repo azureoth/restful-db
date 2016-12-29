@@ -2,6 +2,9 @@
 
 This is a middleware that can be added to any ASP.NET core project to create a RESTful API for the underlying SQL Database
 
+## Installage
+Get it from [Nuget](https://www.nuget.org/packages/Azureoth.RestfulDb/)
+
 ## Usage
 ```C#
         // This method gets called by the runtime. Use this method to add services to the container

@@ -28,7 +28,7 @@ namespace Azureoth.RestfulDb.Database
         {
             var columnName = this.GetForeignKeyColumn(connection, appId, table, navTable);
 
-            var query = $"SELECT * FROM [{appId}].[{navTable}] WHERE [{columnName}] = @ID;";
+            var query = $"SELECT * FROM [{appId}].[{navTable}] WHERE [{columnName}] = @ID ORDER BY [Id];";
 
             using (var command = new SqlCommand(query, connection))
             {
@@ -58,7 +58,7 @@ namespace Azureoth.RestfulDb.Database
 
         public object ReadRecord(SqlConnection connection, string table, object id)
         {
-            var query = $"SELECT * FROM {table} WHERE [Id] = @ID;";
+            var query = $"SELECT * FROM {table} WHERE [Id] = @ID ORDER BY [Id];";
 
             using (var command = new SqlCommand(query, connection))
             {
